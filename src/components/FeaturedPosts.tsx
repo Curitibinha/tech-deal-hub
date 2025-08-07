@@ -1,6 +1,7 @@
 import { Calendar, Clock, ArrowRight, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useNavigate } from "react-router-dom";
 
 const featuredPosts = [
   {
@@ -50,8 +51,17 @@ const featuredPosts = [
 ];
 
 const FeaturedPosts = () => {
+  const navigate = useNavigate();
   const mainPost = featuredPosts[0];
   const secondaryPosts = featuredPosts.slice(1);
+
+  const handleReadMore = (postId: number) => {
+    navigate(`/post/${postId}`);
+  };
+
+  const handleViewAllPosts = () => {
+    navigate('/blog');
+  };
 
   return (
     <section className="py-20 bg-muted/20">
@@ -70,7 +80,10 @@ const FeaturedPosts = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Featured Post */}
           <div className="lg:col-span-2">
-            <article className="bg-card-gradient rounded-2xl overflow-hidden border border-border shadow-glow-blue hover:shadow-glow-purple transition-all duration-300 group">
+            <article 
+              className="bg-card-gradient rounded-2xl overflow-hidden border border-border shadow-glow-blue hover:shadow-glow-purple transition-all duration-300 group cursor-pointer"
+              onClick={() => handleReadMore(mainPost.id)}
+            >
               {/* Image */}
               <div className="relative h-64 bg-muted flex items-center justify-center">
                 <div className="text-6xl">{mainPost.image}</div>
@@ -109,7 +122,13 @@ const FeaturedPosts = () => {
                   {mainPost.excerpt}
                 </p>
 
-                <Button className="bg-tech-gradient hover:opacity-90 transition-opacity">
+                <Button 
+                  className="bg-tech-gradient hover:opacity-90 transition-opacity"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleReadMore(mainPost.id);
+                  }}
+                >
                   Ler Review Completo
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
@@ -123,6 +142,7 @@ const FeaturedPosts = () => {
               <article
                 key={post.id}
                 className="bg-card border border-border rounded-xl p-4 hover:border-primary/30 transition-all duration-300 group cursor-pointer"
+                onClick={() => handleReadMore(post.id)}
               >
                 <div className="flex space-x-4">
                   {/* Image */}
@@ -156,7 +176,11 @@ const FeaturedPosts = () => {
             ))}
 
             {/* View All Button */}
-            <Button variant="outline" className="w-full border-border hover:bg-card">
+            <Button 
+              variant="outline" 
+              className="w-full border-border hover:bg-card"
+              onClick={handleViewAllPosts}
+            >
               Ver Todos os Posts
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

@@ -3,6 +3,7 @@ import { Search, Menu, X, ShoppingCart, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
+import { UserMenu } from "./UserMenu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -78,9 +79,9 @@ const Header = () => {
             >
               <ShoppingCart className="w-5 h-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="hidden sm:flex">
-              <User className="w-5 h-5" />
-            </Button>
+            <div className="hidden sm:flex">
+              <UserMenu />
+            </div>
 
             {/* Mobile Menu Toggle */}
             <Button
@@ -138,10 +139,9 @@ const Header = () => {
                 <ShoppingCart className="w-4 h-4" />
                 <span>Carrinho</span>
               </Button>
-              <Button variant="ghost" size="sm" className="flex items-center space-x-2">
-                <User className="w-4 h-4" />
-                <span>Login</span>
-              </Button>
+              <div className="sm:hidden">
+                <UserMenu />
+              </div>
             </div>
           </div>
         )}

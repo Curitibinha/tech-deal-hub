@@ -26,7 +26,7 @@ export const useFavorites = () => {
   }, [user])
 
   const fetchFavorites = async () => {
-    if (!user) return
+    if (!user || !supabase) return
 
     try {
       const { data, error } = await supabase
@@ -45,7 +45,7 @@ export const useFavorites = () => {
   }
 
   const toggleFavorite = async (product: Product) => {
-    if (!user) {
+    if (!user || !supabase) {
       toast({
         title: "Login necessário",
         description: "Faça login para adicionar produtos aos favoritos",
